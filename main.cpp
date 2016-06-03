@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cmath>
 
 #include <boost/thread.hpp>
 #include <assimp/config.h>
@@ -15,10 +16,8 @@
 #include "opencv2/opencv.hpp"
 #include "opencv2/core/core.hpp"
 
-#include "pso_class_quaternions.h"
-#include "GraphCannySeg.h"
-#include "pso_opengl_render.h"
 
+#include "GraphCannySeg.h"
 
 // Camera parameters for ACCV dataset
 #define FX 572.41140
@@ -179,23 +178,21 @@ void on_trackbar( int, void* )
 
 }
 
-void initTrackbarsSegmentation()
+void initTrackbarsSegmentation(std::string rgb_file_path,  std::string depth_file_path)
 {
-    /* First Load the RGB and DEPTH */
-    //Open Images
+    /* Load the RGB and DEPTH */
+
 
     //CHALLENGE DATASET-1
+    // std::string rgb_name= "img_1164.png";
+    // std::string obj_name= "Shampoo";
 
-    std::string rgb_name= "img_1164.png";
-    std::string obj_name= "Shampoo";
-
-   std::string rgb_file_path = "/Volumes/HD-PNTU3/datasets/"+obj_name+"/RGB/"+rgb_name;
-   std::string depth_file_path = "/Volumes/HD-PNTU3/datasets/"+obj_name+"/Depth/"+rgb_name;
+    // rgb_file_path = "/Volumes/HD-PNTU3/datasets/"+obj_name+"/RGB/"+rgb_name;
+    // depth_file_path = "/Volumes/HD-PNTU3/datasets/"+obj_name+"/Depth/"+rgb_name;
 
     kinect_rgb_img = cv::imread(rgb_file_path);//,cv::IMREAD_UNCHANGED);
-    std::cout << "ok\n";
     kinect_depth_img_mm = cv::imread(depth_file_path,cv::IMREAD_UNCHANGED);// in mm
-    std::cout << "ok\n";
+
     cv::imshow("kinect_rgb_img",kinect_rgb_img);
     cv::imshow("kinect_depth_img_mm",kinect_depth_img_mm);
     for(int i=250;i<350;i++)
@@ -261,14 +258,14 @@ inline void printVector(const float* w, int size)
 
 int main( int argc, char *argv[] )
 {
-    if (argc != 4) {
+    if (argc != 3) {
 
-        printf("usage: %s c1 c2 id\n",argv[0]);
+        printf("usage: %s rgb_file_path depth_file_path\n",argv[0]);
 
         return -1;
     }
 
-    initTrackbarsSegmentation();
+    initTrackbarsSegmentation(argv[1], argv[2]);
 
     delete gcs;
 

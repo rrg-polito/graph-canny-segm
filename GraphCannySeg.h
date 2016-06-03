@@ -25,7 +25,7 @@
 #include <climits>
 #include <iostream>
 #include <fstream>
-
+#include <typeinfo>
 
 #ifndef M_PI
 #define M_PI 3.141592653589793
@@ -39,6 +39,7 @@
 #define deg2rad M_PI/180.0f
 #endif
 
+using namespace std;
 //typedef unsigned char uchar;
 
 //typedef signed char schar;
